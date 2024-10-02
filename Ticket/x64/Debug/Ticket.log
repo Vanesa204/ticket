@@ -1,0 +1,14 @@
+﻿  pch.cpp
+  AssemblyInfo.cpp
+  Carga.cpp
+  DataAccess.cpp
+  Ticket.cpp
+  Form1.cpp
+  Login.cpp
+  Ticket1.cpp
+  Usuario.cpp
+  VistaPanel.cpp
+  Generando código...
+  .NETFramework,Version=v4.7.2.AssemblyAttributes.cpp
+  AssemblyInfo.obj : se encontró un módulo MSIL; vinculación incremental deshabilitada para MSIL; ejecutando vínculo completo
+  Ticket.vcxproj -> C:\Users\Usuario\source\repos\Ticket\x64\Debug\Ticket.exe

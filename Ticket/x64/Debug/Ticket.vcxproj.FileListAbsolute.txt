@@ -1,0 +1,9 @@
+C:\Users\Usuario\source\repos\Ticket\Ticket\x64\Debug\Ticket.vcxproj.AssemblyReference.cache
+C:\Users\Usuario\source\repos\Ticket\Ticket\x64\Debug\Ticket.Carga.resources
+C:\Users\Usuario\source\repos\Ticket\Ticket\x64\Debug\Ticket.Login.resources
+C:\Users\Usuario\source\repos\Ticket\Ticket\x64\Debug\Ticket.ModifLogin.resources
+C:\Users\Usuario\source\repos\Ticket\Ticket\x64\Debug\Ticket.Ticket1.resources
+C:\Users\Usuario\source\repos\Ticket\Ticket\x64\Debug\Ticket.Usuario.resources
+C:\Users\Usuario\source\repos\Ticket\Ticket\x64\Debug\Ticket.VistaPanel.resources
+C:\Users\Usuario\source\repos\Ticket\Ticket\x64\Debug\Ticket.vcxproj.GenerateResource.cache
+C:\Users\Usuario\source\repos\Ticket\Ticket\x64\Debug\Ticket.vcxproj.Up2Date
