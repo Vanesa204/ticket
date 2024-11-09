@@ -1,14 +1,14 @@
-﻿  pch.cpp
-  AssemblyInfo.cpp
-  Carga.cpp
-  DataAccess.cpp
-  Ticket.cpp
-  Form1.cpp
-  Login.cpp
-  Ticket1.cpp
-  Usuario.cpp
-  VistaPanel.cpp
-  Generando código...
-  .NETFramework,Version=v4.7.2.AssemblyAttributes.cpp
+﻿  DataAccess.cpp
+C:\Users\Usuario\source\repos\Ticket\Ticket\DataAccess.cpp(1,1): warning C4005: '__CLR_VER': redefinición de macro
+  (compilando archivo de origen "/DataAccess.cpp")
+  C:\Users\Usuario\source\repos\Ticket\Ticket\DataAccess.cpp(1,1):
+  '__CLR_VER' declarado previamente en la línea de comandos
+  
+C:\Users\Usuario\source\repos\Ticket\Ticket\DataAccess.cpp(1,1): warning C4651: Se especificó '/D__CLR_VER=40809261' para el encabezado precompilado pero no para la compilación actual
+  (compilando archivo de origen "/DataAccess.cpp")
+  
+C:\Users\Usuario\source\repos\Ticket\Ticket\DataAccess.cpp(170,23): warning C4101: 'ex': variable local sin referencia
+  (compilando archivo de origen "/DataAccess.cpp")
+  
   AssemblyInfo.obj : se encontró un módulo MSIL; vinculación incremental deshabilitada para MSIL; ejecutando vínculo completo
   Ticket.vcxproj -> C:\Users\Usuario\source\repos\Ticket\x64\Debug\Ticket.exe

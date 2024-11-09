@@ -1,4 +1,5 @@
 #pragma once
+#include "Usuario.h"
 
 namespace Ticket {
 
@@ -15,10 +16,11 @@ namespace Ticket {
 	public ref class VistaPanel : public System::Windows::Forms::Form
 	{
 	public:
-		VistaPanel(void)
+		VistaPanel(String^ rol)
 		{
 			InitializeComponent();
-			//
+			AjustarVisibilidadBotones(rol);
+			// 
 			//TODO: agregar código de constructor aquí
 			//
 		}
@@ -43,7 +45,7 @@ namespace Ticket {
 		/// <summary>
 		/// Variable del diseñador necesaria.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -83,6 +85,7 @@ namespace Ticket {
 			this->button3->TabIndex = 2;
 			this->button3->Text = L"Usuarios";
 			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &VistaPanel::button3_Click);
 			// 
 			// VistaPanel
 			// 
@@ -98,5 +101,35 @@ namespace Ticket {
 
 		}
 #pragma endregion
-	};
-}
+		private:
+		void AjustarVisibilidadBotones(String^ rol) {
+			if (rol == "Administrador") {
+				// Mostrar todos los botones
+				this->button1->Visible = true;
+				this->button2->Visible = true;
+				this->button3->Visible = true;
+				
+				
+			}
+			else if (rol == "Trabajador") {
+				// Ocultar botones específicos
+				this->button1->Visible = true;
+				this->button2->Visible = true;
+				this->button3->Visible = false;
+			}
+			else if (rol == "Técnico") {
+				// Ocultar botones específicos
+				this->button1->Visible = true;
+				this->button2->Visible = false;
+				this->button3->Visible = true;
+			}
+		}
+		private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+			{
+				Ticket::Usuario^ vistaUsuario = gcnew Ticket::Usuario();
+				vistaUsuario->Show();
+			}
+		}
+};
+
+	}

@@ -10,11 +10,13 @@ namespace DataAccess {
 		ConnectionToSql();
 		MySqlConnection^ GetConnection();
 	};
-	public ref class  UserDao:ConnectionToSql {
-	public:
-		String^ currentUser;
-		bool Login(String^, String^);
-		bool cambiarContrasenia(String^ usuario, String^nuevaContrasenia);
+	public ref class  UserDao :ConnectionToSql {
 
+
+	public:
+		static int currentUser = 0;//aca habia solucionado con Static cuando me salia nulo usuario
+		bool Login(int dni, int password, String^% rol);
+		bool cambiarContrasenia(int dni, int nuevaContrasenia);
+		bool IngresarUsuario(int dni, String^ nombre, String^ apellido, bool habilitado, int fallas, int password, int rolId);
 	};
 }

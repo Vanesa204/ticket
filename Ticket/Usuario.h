@@ -1,4 +1,7 @@
 #pragma once
+#include "DataAccess.h"
+#include "Usuario.h"
+
 
 namespace Ticket {
 
@@ -21,6 +24,11 @@ namespace Ticket {
 			//
 			//TODO: agregar código de constructor aquí
 			//
+
+			this->texDni->TextChanged += gcnew EventHandler(this, &Usuario::texDni_TextChanged);//para que se autocimplete la contraseña
+			this->checkedRol->Items->AddRange(gcnew array<System::Object^> {
+				"Administrador", "Empleado", "Técnico"
+			});
 		}
 
 	protected:
@@ -40,22 +48,63 @@ namespace Ticket {
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Label^ label5;
 	private: System::Windows::Forms::Label^ label6;
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::TextBox^ textBox3;
+	private: System::Windows::Forms::TextBox^ texDni;
 
+	private: System::Windows::Forms::TextBox^ texNombre;
+	private: System::Windows::Forms::TextBox^ texApellido;
+	private: System::Windows::Forms::TextBox^ texContrasenia;
+	private: System::Windows::Forms::Button^ butAgregarUsuario;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column1;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ rolId;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column2;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column3;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column4;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column5;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column6;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column7;
+
+	private: System::Windows::Forms::Button^ butModificarUsuario;
+
+		   // Método manejador de eventos para el cambio de texto en texDni 
+		   
+	private: System::Void texDni_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		// // Completa el campo de contraseña con el valor del DNI 
+
+		this->texContrasenia->Text = this->texDni->Text;
+	}
 
 	private: System::Windows::Forms::TextBox^ textBox6;
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Button^ button2;
 
+
+
+
+
+
+
+
 	private: System::Windows::Forms::Button^ button4;
-	private: System::Windows::Forms::Button^ button5;
-	private: System::Windows::Forms::CheckedListBox^ checkedListBox1;
+	private: System::Windows::Forms::Button^ butEliminarUsuario;
+
+	private: System::Windows::Forms::CheckedListBox^ checkedRol;
+
 	private: System::Windows::Forms::Label^ label7;
-	private: System::Windows::Forms::TextBox^ textBox4;
-	private: System::Windows::Forms::RadioButton^ radioButton1;
-	private: System::Windows::Forms::RadioButton^ radioButton2;
+	private: System::Windows::Forms::TextBox^ texFallas;
+
+	private: System::Windows::Forms::RadioButton^ radioButSi;
+	private: System::Windows::Forms::RadioButton^ radioButNo;
+	private: System::Windows::Forms::DataGridView^ tablaUsuarios;
+
+
+
+
+
+
+
+
+
+
 
 	protected:
 
@@ -63,7 +112,7 @@ namespace Ticket {
 		/// <summary>
 		/// Variable del diseñador necesaria.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -78,19 +127,29 @@ namespace Ticket {
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->texDni = (gcnew System::Windows::Forms::TextBox());
+			this->texNombre = (gcnew System::Windows::Forms::TextBox());
+			this->texApellido = (gcnew System::Windows::Forms::TextBox());
+			this->texContrasenia = (gcnew System::Windows::Forms::TextBox());
+			this->butAgregarUsuario = (gcnew System::Windows::Forms::Button());
+			this->butModificarUsuario = (gcnew System::Windows::Forms::Button());
 			this->button4 = (gcnew System::Windows::Forms::Button());
-			this->button5 = (gcnew System::Windows::Forms::Button());
-			this->checkedListBox1 = (gcnew System::Windows::Forms::CheckedListBox());
+			this->butEliminarUsuario = (gcnew System::Windows::Forms::Button());
+			this->checkedRol = (gcnew System::Windows::Forms::CheckedListBox());
 			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
-			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton2 = (gcnew System::Windows::Forms::RadioButton());
+			this->texFallas = (gcnew System::Windows::Forms::TextBox());
+			this->radioButSi = (gcnew System::Windows::Forms::RadioButton());
+			this->radioButNo = (gcnew System::Windows::Forms::RadioButton());
+			this->tablaUsuarios = (gcnew System::Windows::Forms::DataGridView());
+			this->Column1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->rolId = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Column2 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Column3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Column4 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Column5 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Column6 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Column7 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->tablaUsuarios))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -123,7 +182,7 @@ namespace Ticket {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(25, 125);
+			this->label4->Location = System::Drawing::Point(543, 47);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(23, 13);
 			this->label4->TabIndex = 3;
@@ -132,7 +191,7 @@ namespace Ticket {
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(25, 159);
+			this->label5->Location = System::Drawing::Point(25, 147);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(54, 13);
 			this->label5->TabIndex = 4;
@@ -147,77 +206,78 @@ namespace Ticket {
 			this->label6->TabIndex = 5;
 			this->label6->Text = L"Contraseña";
 			// 
-			// textBox1
+			// texDni
 			// 
-			this->textBox1->Location = System::Drawing::Point(151, 22);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(100, 20);
-			this->textBox1->TabIndex = 6;
+			this->texDni->Location = System::Drawing::Point(151, 22);
+			this->texDni->Name = L"texDni";
+			this->texDni->Size = System::Drawing::Size(100, 20);
+			this->texDni->TabIndex = 6;
 			// 
-			// textBox2
+			// texNombre
 			// 
-			this->textBox2->Location = System::Drawing::Point(151, 54);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(100, 20);
-			this->textBox2->TabIndex = 7;
+			this->texNombre->Location = System::Drawing::Point(151, 54);
+			this->texNombre->Name = L"texNombre";
+			this->texNombre->Size = System::Drawing::Size(100, 20);
+			this->texNombre->TabIndex = 7;
 			// 
-			// textBox3
+			// texApellido
 			// 
-			this->textBox3->Location = System::Drawing::Point(151, 91);
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(100, 20);
-			this->textBox3->TabIndex = 8;
+			this->texApellido->Location = System::Drawing::Point(151, 91);
+			this->texApellido->Name = L"texApellido";
+			this->texApellido->Size = System::Drawing::Size(100, 20);
+			this->texApellido->TabIndex = 8;
 			// 
-			// textBox6
+			// texContrasenia
 			// 
-			this->textBox6->Location = System::Drawing::Point(151, 193);
-			this->textBox6->Name = L"textBox6";
-			this->textBox6->Size = System::Drawing::Size(100, 20);
-			this->textBox6->TabIndex = 11;
+			this->texContrasenia->Location = System::Drawing::Point(151, 193);
+			this->texContrasenia->Name = L"texContrasenia";
+			this->texContrasenia->Size = System::Drawing::Size(100, 20);
+			this->texContrasenia->TabIndex = 11;
 			// 
-			// button1
+			// butAgregarUsuario
 			// 
-			this->button1->Location = System::Drawing::Point(339, 34);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(75, 23);
-			this->button1->TabIndex = 12;
-			this->button1->Text = L"Agregar";
-			this->button1->UseVisualStyleBackColor = true;
+			this->butAgregarUsuario->Location = System::Drawing::Point(339, 34);
+			this->butAgregarUsuario->Name = L"butAgregarUsuario";
+			this->butAgregarUsuario->Size = System::Drawing::Size(75, 23);
+			this->butAgregarUsuario->TabIndex = 12;
+			this->butAgregarUsuario->Text = L"Agregar";
+			this->butAgregarUsuario->UseVisualStyleBackColor = true;
+			this->butAgregarUsuario->Click += gcnew System::EventHandler(this, &Usuario::butAgregarUsuario_Click);
 			// 
-			// button2
+			// butModificarUsuario
 			// 
-			this->button2->Location = System::Drawing::Point(339, 63);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(75, 23);
-			this->button2->TabIndex = 13;
-			this->button2->Text = L"Modificar";
-			this->button2->UseVisualStyleBackColor = true;
+			this->butModificarUsuario->Location = System::Drawing::Point(339, 63);
+			this->butModificarUsuario->Name = L"butModificarUsuario";
+			this->butModificarUsuario->Size = System::Drawing::Size(75, 23);
+			this->butModificarUsuario->TabIndex = 13;
+			this->butModificarUsuario->Text = L"Modificar";
+			this->butModificarUsuario->UseVisualStyleBackColor = true;
 			// 
 			// button4
 			// 
-			this->button4->Location = System::Drawing::Point(285, 189);
+			this->button4->Location = System::Drawing::Point(270, 193);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(101, 23);
 			this->button4->TabIndex = 15;
 			this->button4->Text = L"Blanquear clave";
 			this->button4->UseVisualStyleBackColor = true;
 			// 
-			// button5
+			// butEliminarUsuario
 			// 
-			this->button5->Location = System::Drawing::Point(339, 92);
-			this->button5->Name = L"button5";
-			this->button5->Size = System::Drawing::Size(75, 23);
-			this->button5->TabIndex = 16;
-			this->button5->Text = L"Eliminar";
-			this->button5->UseVisualStyleBackColor = true;
+			this->butEliminarUsuario->Location = System::Drawing::Point(339, 92);
+			this->butEliminarUsuario->Name = L"butEliminarUsuario";
+			this->butEliminarUsuario->Size = System::Drawing::Size(75, 23);
+			this->butEliminarUsuario->TabIndex = 16;
+			this->butEliminarUsuario->Text = L"Eliminar";
+			this->butEliminarUsuario->UseVisualStyleBackColor = true;
 			// 
-			// checkedListBox1
+			// checkedRol
 			// 
-			this->checkedListBox1->FormattingEnabled = true;
-			this->checkedListBox1->Location = System::Drawing::Point(151, 125);
-			this->checkedListBox1->Name = L"checkedListBox1";
-			this->checkedListBox1->Size = System::Drawing::Size(120, 19);
-			this->checkedListBox1->TabIndex = 17;
+			this->checkedRol->FormattingEnabled = true;
+			this->checkedRol->Location = System::Drawing::Point(652, 47);
+			this->checkedRol->Name = L"checkedRol";
+			this->checkedRol->Size = System::Drawing::Size(100, 64);
+			this->checkedRol->TabIndex = 17;
 			// 
 			// label7
 			// 
@@ -228,53 +288,106 @@ namespace Ticket {
 			this->label7->TabIndex = 18;
 			this->label7->Text = L"Fallas";
 			// 
-			// textBox4
+			// texFallas
 			// 
-			this->textBox4->Location = System::Drawing::Point(339, 125);
-			this->textBox4->Name = L"textBox4";
-			this->textBox4->Size = System::Drawing::Size(32, 20);
-			this->textBox4->TabIndex = 19;
+			this->texFallas->Location = System::Drawing::Point(339, 125);
+			this->texFallas->Name = L"texFallas";
+			this->texFallas->Size = System::Drawing::Size(32, 20);
+			this->texFallas->TabIndex = 19;
 			// 
-			// radioButton1
+			// radioButSi
 			// 
-			this->radioButton1->AutoSize = true;
-			this->radioButton1->Location = System::Drawing::Point(151, 157);
-			this->radioButton1->Name = L"radioButton1";
-			this->radioButton1->Size = System::Drawing::Size(34, 17);
-			this->radioButton1->TabIndex = 20;
-			this->radioButton1->TabStop = true;
-			this->radioButton1->Text = L"Si";
-			this->radioButton1->UseVisualStyleBackColor = true;
+			this->radioButSi->AutoSize = true;
+			this->radioButSi->Location = System::Drawing::Point(151, 143);
+			this->radioButSi->Name = L"radioButSi";
+			this->radioButSi->Size = System::Drawing::Size(34, 17);
+			this->radioButSi->TabIndex = 20;
+			this->radioButSi->TabStop = true;
+			this->radioButSi->Text = L"Si";
+			this->radioButSi->UseVisualStyleBackColor = true;
 			// 
-			// radioButton2
+			// radioButNo
 			// 
-			this->radioButton2->AutoSize = true;
-			this->radioButton2->Location = System::Drawing::Point(221, 157);
-			this->radioButton2->Name = L"radioButton2";
-			this->radioButton2->Size = System::Drawing::Size(39, 17);
-			this->radioButton2->TabIndex = 21;
-			this->radioButton2->TabStop = true;
-			this->radioButton2->Text = L"No";
-			this->radioButton2->UseVisualStyleBackColor = true;
+			this->radioButNo->AutoSize = true;
+			this->radioButNo->Location = System::Drawing::Point(212, 145);
+			this->radioButNo->Name = L"radioButNo";
+			this->radioButNo->Size = System::Drawing::Size(39, 17);
+			this->radioButNo->TabIndex = 21;
+			this->radioButNo->TabStop = true;
+			this->radioButNo->Text = L"No";
+			this->radioButNo->UseVisualStyleBackColor = true;
+			// 
+			// tablaUsuarios
+			// 
+			this->tablaUsuarios->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->tablaUsuarios->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(8) {
+				this->Column1,
+					this->rolId, this->Column2, this->Column3, this->Column4, this->Column5, this->Column6, this->Column7
+			});
+			this->tablaUsuarios->Location = System::Drawing::Point(28, 250);
+			this->tablaUsuarios->Name = L"tablaUsuarios";
+			this->tablaUsuarios->Size = System::Drawing::Size(743, 150);
+			this->tablaUsuarios->TabIndex = 22;
+			// 
+			// Column1
+			// 
+			this->Column1->HeaderText = L"Usuario";
+			this->Column1->Name = L"Column1";
+			// 
+			// rolId
+			// 
+			this->rolId->HeaderText = L"rolId";
+			this->rolId->Name = L"rolId";
+			// 
+			// Column2
+			// 
+			this->Column2->HeaderText = L"Nombre";
+			this->Column2->Name = L"Column2";
+			// 
+			// Column3
+			// 
+			this->Column3->HeaderText = L"Apellido";
+			this->Column3->Name = L"Column3";
+			// 
+			// Column4
+			// 
+			this->Column4->HeaderText = L"Rol";
+			this->Column4->Name = L"Column4";
+			// 
+			// Column5
+			// 
+			this->Column5->HeaderText = L"Habilitado";
+			this->Column5->Name = L"Column5";
+			// 
+			// Column6
+			// 
+			this->Column6->HeaderText = L"Contraseña";
+			this->Column6->Name = L"Column6";
+			// 
+			// Column7
+			// 
+			this->Column7->HeaderText = L"Fallas";
+			this->Column7->Name = L"Column7";
 			// 
 			// Usuario
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(447, 261);
-			this->Controls->Add(this->radioButton2);
-			this->Controls->Add(this->radioButton1);
-			this->Controls->Add(this->textBox4);
+			this->ClientSize = System::Drawing::Size(874, 430);
+			this->Controls->Add(this->tablaUsuarios);
+			this->Controls->Add(this->radioButNo);
+			this->Controls->Add(this->radioButSi);
+			this->Controls->Add(this->texFallas);
 			this->Controls->Add(this->label7);
-			this->Controls->Add(this->checkedListBox1);
-			this->Controls->Add(this->button5);
+			this->Controls->Add(this->checkedRol);
+			this->Controls->Add(this->butEliminarUsuario);
 			this->Controls->Add(this->button4);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
-			this->Controls->Add(this->textBox6);
-			this->Controls->Add(this->textBox3);
-			this->Controls->Add(this->textBox2);
-			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->butModificarUsuario);
+			this->Controls->Add(this->butAgregarUsuario);
+			this->Controls->Add(this->texContrasenia);
+			this->Controls->Add(this->texApellido);
+			this->Controls->Add(this->texNombre);
+			this->Controls->Add(this->texDni);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->label4);
@@ -283,10 +396,67 @@ namespace Ticket {
 			this->Controls->Add(this->label1);
 			this->Name = L"Usuario";
 			this->Text = L"Usuario";
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->tablaUsuarios))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
+	private: System::Void butAgregarUsuario_Click(System::Object^ sender, System::EventArgs^ e) {
+		
+		DataAccess::UserDao^ userDao = gcnew DataAccess::UserDao();
+		int dni = Int32::Parse(this->texDni->Text);
+		String^ nombre = this->texNombre->Text;
+		String^ apellido = this->texApellido->Text;
+		
+		int fallas = 0; // this->texFallas->Text;
+		
+		this->texFallas->Text = fallas.ToString();
+		
+		// para obtener el rol que se selecciona del CheckedListBox
+
+		/*String^ rol = this->checkedRol->CheckedItems->Count > 0 ? this->checkedRol->CheckedItems[0]->ToString() : "";*/
+		int idRol = this->checkedRol->CheckedItems->Count > 0 ? this->checkedRol->SelectedIndex:-1;
+
+		//obtener el estado habilitado
+
+		bool habilitado = this->radioButSi->Checked;
+		/*bool habilitado = this->radioButSi->Checked ? "Sí" : "No";
+		if (this->radioButSi->Checked) {
+
+			MessageBox::Show("Seleccionaste Sí");
+		}
+		else if (this->radioButNo->Checked) {
+
+			MessageBox::Show("Seleccionaste No");
+		}
+		else {
+
+			MessageBox::Show("No seleccionaste ninguna opción, por favor selecciona una opcíon");
+		}*/
+
+		//confi del checkedListBox//
+
+		
+
+		int password = Int32::Parse(this->texDni->Text);// this->texContrasenia->Text;
+		this->texContrasenia->Text = password.ToString();
+		
+
+		// Llamar al método IngresarUsuario
+	
+		 bool resultado = userDao->IngresarUsuario(dni, nombre, apellido,  habilitado, fallas, password, idRol);
+		
+		// Verificar la selección del RadioButton
+	
+		if (resultado) { 
+			MessageBox::Show("Usuario agregado correctamente");
+		}
+		else { 
+			MessageBox::Show("Error al agregar el usuario"); 
+		}
+
 	};
+	};
+
 }

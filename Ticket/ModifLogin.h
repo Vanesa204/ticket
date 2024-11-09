@@ -17,10 +17,10 @@ namespace Ticket {
 	public ref class ModifLogin : public System::Windows::Forms::Form
 	{
 	public:
-		ModifLogin(void)
+		ModifLogin(int dni)
 		{
 			InitializeComponent();
-		
+			this->labUsuario->Text = "Usuario: " + dni;
 			//
 			//TODO: agregar código de constructor aquí
 			//
@@ -42,6 +42,7 @@ namespace Ticket {
 	private: System::Windows::Forms::TextBox^ contraseniaActual;
 	private: System::Windows::Forms::TextBox^ nuevaContrasenia;
 	private: System::Windows::Forms::Button^ btnCambiarContrasena;
+	private: System::Windows::Forms::Label^ labelUsuario;
 	
 
 
@@ -50,6 +51,7 @@ namespace Ticket {
 
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::TextBox^ confContrasenia;
+	private: System::Windows::Forms::Label^ labUsuario;
 
 
 	protected:
@@ -74,6 +76,7 @@ namespace Ticket {
 			this->btnCambiarContrasena = (gcnew System::Windows::Forms::Button());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->confContrasenia = (gcnew System::Windows::Forms::TextBox());
+			this->labUsuario = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// label1
@@ -126,7 +129,6 @@ namespace Ticket {
 			this->label3->Size = System::Drawing::Size(140, 13);
 			this->label3->TabIndex = 5;
 			this->label3->Text = L"Confirma Nueva Contraseña";
-
 			// 
 			// confContrasenia
 			// 
@@ -135,11 +137,20 @@ namespace Ticket {
 			this->confContrasenia->Size = System::Drawing::Size(100, 20);
 			this->confContrasenia->TabIndex = 6;
 			// 
+			// labUsuario
+			// 
+			this->labUsuario->AutoSize = true;
+			this->labUsuario->Location = System::Drawing::Point(13, 13);
+			this->labUsuario->Name = L"labUsuario";
+			this->labUsuario->Size = System::Drawing::Size(0, 13);
+			this->labUsuario->TabIndex = 7;
+			// 
 			// ModifLogin
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(284, 261);
+			this->Controls->Add(this->labUsuario);
 			this->Controls->Add(this->confContrasenia);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->btnCambiarContrasena);
@@ -155,27 +166,35 @@ namespace Ticket {
 		}
 #pragma endregion
 	private: System::Void btnCambiarContrasena_Click(System::Object^ sender, System::EventArgs^ e) {
+		
 		DataAccess::UserDao^ userDao = gcnew DataAccess::UserDao();
-		String^ usuario = userDao->currentUser;
-		String^ password = this->contraseniaActual->Text;
-		String^ nuevaContrasenia = this->nuevaContrasenia->Text;
-		String^ confirmarContrasenia = this->confContrasenia->Text;
-		
-		
-		
-		if (String::IsNullOrEmpty(nuevaContrasenia)) {
-			MessageBox::Show("El campo de la nueva contraseña no puede estar vacío.");
+		//String^ usuario = userDao->currentUser;
+		int dni = DataAccess::UserDao::currentUser; //lo modifico cuando saco el static en login.h
+		int password = Int32::Parse(this->contraseniaActual->Text); 
+		int nuevaContrasenia = Int32::Parse(this->nuevaContrasenia->Text);
+		int confirmarContrasenia = Int32::Parse(this->confContrasenia->Text);
+		String^ rol = nullptr;
+		if (dni == 0) {
+			MessageBox::Show("El usuario no puede estar vacío.");
 			return;
 		}
 
-		if (nuevaContrasenia != confirmarContrasenia)
+		if (password == 0) {
+			MessageBox::Show("La contraseña actual no puede estar vacía.");
+			return;
+		}
+		if (nuevaContrasenia == 0) {
+			MessageBox::Show("El campo de la nueva contraseña no puede estar vacío.");
+			return;
+		}
+				if (nuevaContrasenia != confirmarContrasenia)
 		{
 			MessageBox::Show("La nueva contraseña y la confirmación no coinciden.");
 			return;
 		}
+	
 
-		
-		bool resultado = userDao->Login(usuario, password);
+		bool resultado = userDao->Login(dni, password, rol);
 
 		if (!resultado)
 		{
@@ -184,19 +203,24 @@ namespace Ticket {
 		}
 
 		//actualizo la contraseña
-	     resultado = userDao->cambiarContrasenia(usuario, nuevaContrasenia); 
-		 if (resultado)
-		{
-			MessageBox::Show("Contraseña cambiada exitosamente");
+		try {
+			resultado = userDao->cambiarContrasenia(dni, nuevaContrasenia);
+			if (resultado)
+			{
+				MessageBox::Show("Contraseña cambiada exitosamente");
+			}
+			else
+			{
+				MessageBox::Show("Error al cambiar la contraseña");
+			}
 		}
-		else
-		{
-			MessageBox::Show("Error al cambiar la contraseña");
+		catch (Exception^ ex) {
+			MessageBox::Show("Ocurrió un error: " + ex->Message);
 		}
 
 		this->Close();
 
 
-	}
+	};
 };
 }

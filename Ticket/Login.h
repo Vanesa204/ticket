@@ -1,6 +1,7 @@
 #pragma once
 #include "ModifLogin.h"
 #include "VistaPanel.h"
+#include "Login.h"
 
 namespace Ticket {
 
@@ -20,6 +21,7 @@ namespace Ticket {
 		Login(void)
 		{
 			InitializeComponent();
+
 			//
 			//TODO: Add the constructor code here
 			//
@@ -127,32 +129,109 @@ namespace Ticket {
 #pragma endregion
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 
-		String^ usuario = this->nIdentificacion->Text;
-		String^ password = this->contrasena->Text;
+		String^ usuarioStr = this->nIdentificacion->Text;
+		String^ passwordStr = this->contrasena->Text;
+		String^ rol = nullptr;
+		if (String::IsNullOrEmpty(usuarioStr)) {
+			MessageBox::Show("El campo de identificación no puede estar vacío.");
+			return;
+		}
+		if (String::IsNullOrEmpty(passwordStr)) {
+			MessageBox::Show("El campo de contraseña no puede estar vacío.");
+			return;
+		}
+		int dni;
+		int password;
+		try
 
-		DataAccess::UserDao^ userDao = gcnew DataAccess::UserDao();
+		{
+			dni = Int32::Parse(usuarioStr);
+		}catch (FormatException^) {
+			MessageBox::Show("El formato de la identificación no es válido. Asegúrate de que sea un número entero.");
+			return;
+		}
 
-		bool resultado = userDao->Login(usuario, password);
-		if (resultado) {
-			if (usuario == password)//(userDao->currentUser == usuario)
-			{
-				Ticket::ModifLogin^ modifLogin = gcnew Ticket::ModifLogin();
-				modifLogin->Show();
+		try { 
+			password = Int32::Parse(passwordStr);
 
+		}
+		catch(FormatException^){
+			MessageBox::Show("El formato de la contraseña no es válido. Asegúrate de que sea un número entero.");
+		return;
+		}
+
+		/*int dni = Int32::Parse(this->nIdentificacion->Text);
+		int password = Int32::Parse(this->contrasena->Text);*/
+	
+
+		Console::WriteLine("Usuario ingresado: " + dni.ToString());
+		Console::WriteLine("Contraseña ingresada: " + password.ToString());
+		System::Diagnostics::Debug::WriteLine("Valor de usuario: " + dni.ToString());   // Línea de depuración para verificar el valor de usuario
+
+
+		try {
+			/*
+					if (dni == 0) {
+						MessageBox::Show("El campo de identificación no puede estar vacío.");
+						return;
+					}
+
+					if (password == 0) {
+						MessageBox::Show("El campo de contraseña no puede estar vacío.");
+						return;
+					}
+
+			*/
+
+
+			DataAccess::UserDao^ userDao = gcnew DataAccess::UserDao();
+			Console::WriteLine("Llamando a Login con dni: " + dni + " y password: " + password);
+			bool resultado = userDao->Login(dni, password, rol);
+
+			if (resultado) {
+				MessageBox::Show("existe en la base de datos");
+
+				DataAccess::UserDao::currentUser = dni;
+
+				/*userDao->currentUser = dni;*/
+
+				if (dni == password)
+				{
+					//Ticket::ModifLogin^ modifLogin = gcnew Ticket::ModifLogin(userDao->currentUser);remplazo por la de abajo
+					Ticket::ModifLogin^ modifLogin = gcnew Ticket::ModifLogin(DataAccess::UserDao::currentUser);
+					
+					modifLogin->Show();
+
+				}
+				else
+				{
+
+					Ticket::VistaPanel^ vistaPanel = gcnew Ticket::VistaPanel(rol);
+					vistaPanel->Show();
+
+
+				}
 			}
 			else
 			{
-				Ticket::VistaPanel^ vistaPanel = gcnew Ticket::VistaPanel();
-				vistaPanel->Show();
-
+				MessageBox::Show("Usuario o contraseña incorrectos.");
 
 			}
+			/* }
+			catch (FormatException^ ex) {
+				MessageBox::Show("El formato de la identificación o la contraseña no es válido.");
+			}*/
 		}
-		else
-		{
-			MessageBox::Show("Usuario o contraseña incorrectos.");
+		catch (Exception^ ex) {
+			MessageBox::Show("Ocurrió un error: " + ex->Message);
+		}
 
-		}
 	};
+
 	};
 }
+
+
+
+
+
