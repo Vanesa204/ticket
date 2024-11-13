@@ -3,6 +3,8 @@
 #include "VistaPanel.h"
 #include "Login.h"
 
+
+
 namespace Ticket {
 
 	using namespace System;
@@ -208,6 +210,7 @@ namespace Ticket {
 
 					Ticket::VistaPanel^ vistaPanel = gcnew Ticket::VistaPanel(rol);
 					vistaPanel->Show();
+				}
 
 
 				}
