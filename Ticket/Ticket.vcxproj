@@ -134,6 +134,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="DataAccess.h" />
+    <ClInclude Include="Listado.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Login.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -156,6 +159,8 @@
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="Carga.cpp" />
     <ClCompile Include="DataAccess.cpp" />
+    <ClCompile Include="Listado.cpp" />
+    <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="Form1.cpp" />
     <ClCompile Include="Login.cpp" />
@@ -185,6 +190,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Carga.resx">
       <DependentUpon>Carga.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado.resx">
+      <DependentUpon>Listado.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.h</DependentUpon>

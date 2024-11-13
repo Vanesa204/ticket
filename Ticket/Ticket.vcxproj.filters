@@ -47,6 +47,9 @@
     <ClInclude Include="DataAccess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Listado.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ticket.cpp">
@@ -77,6 +80,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DataAccess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Listado.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

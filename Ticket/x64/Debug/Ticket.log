@@ -4,11 +4,12 @@ C:\Users\Usuario\source\repos\Ticket\Ticket\DataAccess.cpp(1,1): warning C4005: 
   C:\Users\Usuario\source\repos\Ticket\Ticket\DataAccess.cpp(1,1):
   '__CLR_VER' declarado previamente en la línea de comandos
   
-C:\Users\Usuario\source\repos\Ticket\Ticket\DataAccess.cpp(1,1): warning C4651: Se especificó '/D__CLR_VER=40809261' para el encabezado precompilado pero no para la compilación actual
+C:\Users\Usuario\source\repos\Ticket\Ticket\DataAccess.cpp(1,1): warning C4651: Se especificó '/D__CLR_VER=40809277' para el encabezado precompilado pero no para la compilación actual
   (compilando archivo de origen "/DataAccess.cpp")
   
-C:\Users\Usuario\source\repos\Ticket\Ticket\DataAccess.cpp(170,23): warning C4101: 'ex': variable local sin referencia
+C:\Users\Usuario\source\repos\Ticket\Ticket\DataAccess.cpp(178,21): warning C4101: 'ex': variable local sin referencia
   (compilando archivo de origen "/DataAccess.cpp")
   
+C:\Users\Usuario\source\repos\Ticket\Ticket\DataAccess.cpp(469,1): warning C4715: 'DataAccess::UserDao::ReabrirTicket': no todas las rutas de acceso de control devuelven un valor
   AssemblyInfo.obj : se encontró un módulo MSIL; vinculación incremental deshabilitada para MSIL; ejecutando vínculo completo
   Ticket.vcxproj -> C:\Users\Usuario\source\repos\Ticket\x64\Debug\Ticket.exe

@@ -1,4 +1,7 @@
 #pragma once
+#include "DataAccess.h"
+#include "Usuario.h"
+
 
 namespace Ticket {
 
@@ -38,19 +41,28 @@ namespace Ticket {
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::TextBox^ textBox3;
-	private: System::Windows::Forms::TextBox^ textBox4;
+
+	private: System::Windows::Forms::TextBox^ textTitulo;
+	private: System::Windows::Forms::TextBox^ textDetalle;
+
+
+
+
+
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column1;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column2;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column3;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column4;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column5;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::Button^ button3;
+	private: System::Windows::Forms::Button^ buttonCargarTicket;
+	private: System::Windows::Forms::Button^ buttonModTicket;
+	private: System::Windows::Forms::Button^ buttonEliminarTicket;
+	private: System::Windows::Forms::Label^ labNTicket;
+	private: System::Windows::Forms::Label^ labIdTrabajador;
+
+
+
+
+
+
+
+
 
 	protected:
 
@@ -71,19 +83,14 @@ namespace Ticket {
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
+			this->textTitulo = (gcnew System::Windows::Forms::TextBox());
+			this->textDetalle = (gcnew System::Windows::Forms::TextBox());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
-			this->Column1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column2 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column4 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column5 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->buttonCargarTicket = (gcnew System::Windows::Forms::Button());
+			this->buttonModTicket = (gcnew System::Windows::Forms::Button());
+			this->buttonEliminarTicket = (gcnew System::Windows::Forms::Button());
+			this->labNTicket = (gcnew System::Windows::Forms::Label());
+			this->labIdTrabajador = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -99,7 +106,7 @@ namespace Ticket {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(25, 68);
+			this->label2->Location = System::Drawing::Point(25, 57);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(35, 13);
 			this->label2->TabIndex = 1;
@@ -108,7 +115,7 @@ namespace Ticket {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(25, 101);
+			this->label3->Location = System::Drawing::Point(25, 87);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(40, 13);
 			this->label3->TabIndex = 2;
@@ -123,122 +130,128 @@ namespace Ticket {
 			this->label4->TabIndex = 3;
 			this->label4->Text = L"Id Trabajador";
 			// 
-			// textBox1
+			// textTitulo
 			// 
-			this->textBox1->Location = System::Drawing::Point(129, 30);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(100, 20);
-			this->textBox1->TabIndex = 4;
+			this->textTitulo->Location = System::Drawing::Point(120, 50);
+			this->textTitulo->Name = L"textTitulo";
+			this->textTitulo->Size = System::Drawing::Size(100, 20);
+			this->textTitulo->TabIndex = 5;
 			// 
-			// textBox2
+			// textDetalle
 			// 
-			this->textBox2->Location = System::Drawing::Point(129, 60);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(100, 20);
-			this->textBox2->TabIndex = 5;
-			// 
-			// textBox3
-			// 
-			this->textBox3->Location = System::Drawing::Point(129, 101);
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(100, 20);
-			this->textBox3->TabIndex = 6;
-			// 
-			// textBox4
-			// 
-			this->textBox4->Location = System::Drawing::Point(129, 139);
-			this->textBox4->Name = L"textBox4";
-			this->textBox4->Size = System::Drawing::Size(100, 20);
-			this->textBox4->TabIndex = 7;
+			this->textDetalle->Location = System::Drawing::Point(120, 87);
+			this->textDetalle->Multiline = true;
+			this->textDetalle->Name = L"textDetalle";
+			this->textDetalle->Size = System::Drawing::Size(244, 49);
+			this->textDetalle->TabIndex = 6;
 			// 
 			// dataGridView1
 			// 
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
-				this->Column1,
-					this->Column2, this->Column3, this->Column4, this->Column5
-			});
 			this->dataGridView1->Location = System::Drawing::Point(28, 165);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->Size = System::Drawing::Size(545, 150);
 			this->dataGridView1->TabIndex = 8;
 			// 
-			// Column1
+			// buttonCargarTicket
 			// 
-			this->Column1->HeaderText = L"Nº";
-			this->Column1->Name = L"Column1";
+			this->buttonCargarTicket->Location = System::Drawing::Point(418, 26);
+			this->buttonCargarTicket->Name = L"buttonCargarTicket";
+			this->buttonCargarTicket->Size = System::Drawing::Size(75, 23);
+			this->buttonCargarTicket->TabIndex = 9;
+			this->buttonCargarTicket->Text = L"Cargar ";
+			this->buttonCargarTicket->UseVisualStyleBackColor = true;
+			this->buttonCargarTicket->Click += gcnew System::EventHandler(this, &Carga::button1_Click);
 			// 
-			// Column2
+			// buttonModTicket
 			// 
-			this->Column2->HeaderText = L"Título";
-			this->Column2->Name = L"Column2";
+			this->buttonModTicket->Location = System::Drawing::Point(418, 57);
+			this->buttonModTicket->Name = L"buttonModTicket";
+			this->buttonModTicket->Size = System::Drawing::Size(75, 23);
+			this->buttonModTicket->TabIndex = 10;
+			this->buttonModTicket->Text = L"Modificar";
+			this->buttonModTicket->UseVisualStyleBackColor = true;
 			// 
-			// Column3
+			// buttonEliminarTicket
 			// 
-			this->Column3->HeaderText = L"Detalle";
-			this->Column3->Name = L"Column3";
+			this->buttonEliminarTicket->Location = System::Drawing::Point(418, 87);
+			this->buttonEliminarTicket->Name = L"buttonEliminarTicket";
+			this->buttonEliminarTicket->Size = System::Drawing::Size(75, 23);
+			this->buttonEliminarTicket->TabIndex = 11;
+			this->buttonEliminarTicket->Text = L"Eliminar";
+			this->buttonEliminarTicket->UseVisualStyleBackColor = true;
 			// 
-			// Column4
+			// labNTicket
 			// 
-			this->Column4->HeaderText = L"Id Trabajador";
-			this->Column4->Name = L"Column4";
+			this->labNTicket->AutoSize = true;
+			this->labNTicket->Location = System::Drawing::Point(129, 29);
+			this->labNTicket->Name = L"labNTicket";
+			this->labNTicket->Size = System::Drawing::Size(0, 13);
+			this->labNTicket->TabIndex = 12;
 			// 
-			// Column5
+			// labIdTrabajador
 			// 
-			this->Column5->HeaderText = L"Estado";
-			this->Column5->Name = L"Column5";
-			// 
-			// button1
-			// 
-			this->button1->Location = System::Drawing::Point(418, 26);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(75, 23);
-			this->button1->TabIndex = 9;
-			this->button1->Text = L"Cargar ";
-			this->button1->UseVisualStyleBackColor = true;
-			// 
-			// button2
-			// 
-			this->button2->Location = System::Drawing::Point(418, 57);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(75, 23);
-			this->button2->TabIndex = 10;
-			this->button2->Text = L"Modificar";
-			this->button2->UseVisualStyleBackColor = true;
-			// 
-			// button3
-			// 
-			this->button3->Location = System::Drawing::Point(418, 87);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(75, 23);
-			this->button3->TabIndex = 11;
-			this->button3->Text = L"Eliminar";
-			this->button3->UseVisualStyleBackColor = true;
+			this->labIdTrabajador->AutoSize = true;
+			this->labIdTrabajador->Location = System::Drawing::Point(129, 139);
+			this->labIdTrabajador->Name = L"labIdTrabajador";
+			this->labIdTrabajador->Size = System::Drawing::Size(0, 13);
+			this->labIdTrabajador->TabIndex = 13;
 			// 
 			// Carga
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(612, 321);
-			this->Controls->Add(this->button3);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
+			this->Controls->Add(this->labIdTrabajador);
+			this->Controls->Add(this->labNTicket);
+			this->Controls->Add(this->buttonEliminarTicket);
+			this->Controls->Add(this->buttonModTicket);
+			this->Controls->Add(this->buttonCargarTicket);
 			this->Controls->Add(this->dataGridView1);
-			this->Controls->Add(this->textBox4);
-			this->Controls->Add(this->textBox3);
-			this->Controls->Add(this->textBox2);
-			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->textDetalle);
+			this->Controls->Add(this->textTitulo);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Name = L"Carga";
 			this->Text = L"Carga";
+			this->Load += gcnew System::EventHandler(this, &Carga::Carga_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	};
+		private: System::Void Carga_Load(System::Object^ sender, System::EventArgs^ e) {
+			this->labIdTrabajador->Text = "" + DataAccess::UserDao::currentUser;
+		}
+
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		DataAccess::UserDao^ userDao = gcnew DataAccess::UserDao();
+
+		
+		String^ titulo = this->textTitulo->Text;
+		String^ detalle = this->textDetalle->Text;
+		int dniTrabajador = DataAccess::UserDao::currentUser;
+		int N_Ticket = 0; // Variable la creo  para almacenar el N_Ticket generado
+
+		bool resultado = userDao->carga_ticket(titulo, detalle, dniTrabajador, N_Ticket);
+
+		if (resultado)
+		{
+			this->labNTicket->Text = " " + N_Ticket;
+
+			// Actualiza el label con el N_Ticket generado
+			MessageBox::Show("Ticket insertado exitosamente. Número de Ticket: " + N_Ticket);
+		
+	    }
+		else
+		{
+			MessageBox::Show("Error al guardar el Ticket.");
+         }
+	}
+
+};
 }

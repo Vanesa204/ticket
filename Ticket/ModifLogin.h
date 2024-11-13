@@ -168,12 +168,15 @@ namespace Ticket {
 	private: System::Void btnCambiarContrasena_Click(System::Object^ sender, System::EventArgs^ e) {
 		
 		DataAccess::UserDao^ userDao = gcnew DataAccess::UserDao();
-		//String^ usuario = userDao->currentUser;
+		
 		int dni = DataAccess::UserDao::currentUser; //lo modifico cuando saco el static en login.h
+
 		int password = Int32::Parse(this->contraseniaActual->Text); 
 		int nuevaContrasenia = Int32::Parse(this->nuevaContrasenia->Text);
 		int confirmarContrasenia = Int32::Parse(this->confContrasenia->Text);
 		String^ rol = nullptr;
+
+		//if para evitar los campos esten en blanco
 		if (dni == 0) {
 			MessageBox::Show("El usuario no puede estar vacío.");
 			return;
@@ -187,6 +190,8 @@ namespace Ticket {
 			MessageBox::Show("El campo de la nueva contraseña no puede estar vacío.");
 			return;
 		}
+		// if para verificar la nueva contraseña
+
 				if (nuevaContrasenia != confirmarContrasenia)
 		{
 			MessageBox::Show("La nueva contraseña y la confirmación no coinciden.");
@@ -194,9 +199,9 @@ namespace Ticket {
 		}
 	
 
-		bool resultado = userDao->Login(dni, password, rol);
+		bool resultado = userDao->Login(dni, password, rol); // pido los datos a la base de datos
 
-		if (!resultado)
+		if (!resultado)  //Verificar que la contraseña actual proporcionada por el usuario coincide con la registrada en la base de datos asegura que el cambio de contraseña solo lo puede realizar el propietario de la cuenta. Esto protege la cuenta contra accesos no autorizados.
 		{
 			MessageBox::Show("La contraseña actual es incorrecta");
 			return;
@@ -204,7 +209,8 @@ namespace Ticket {
 
 		//actualizo la contraseña
 		try {
-			resultado = userDao->cambiarContrasenia(dni, nuevaContrasenia);
+			resultado = userDao->cambiarContrasenia(dni, nuevaContrasenia); 
+
 			if (resultado)
 			{
 				MessageBox::Show("Contraseña cambiada exitosamente");
@@ -215,7 +221,7 @@ namespace Ticket {
 			}
 		}
 		catch (Exception^ ex) {
-			MessageBox::Show("Ocurrió un error: " + ex->Message);
+			MessageBox::Show("Ocurrió un error al actualizar la contraseña");
 		}
 
 		this->Close();

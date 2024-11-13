@@ -1,5 +1,8 @@
 #pragma once
 #include "Usuario.h"
+#include "Ticket1.h"
+#include "Listado.h"
+#include "Carga.h"
 
 namespace Ticket {
 
@@ -15,20 +18,17 @@ namespace Ticket {
 	/// </summary>
 	public ref class VistaPanel : public System::Windows::Forms::Form
 	{
+	private: String^ rol;
+
 	public:
 		VistaPanel(String^ rol)
 		{
+			this->rol = rol;
 			InitializeComponent();
 			AjustarVisibilidadBotones(rol);
-			// 
-			//TODO: agregar código de constructor aquí
-			//
 		}
 
 	protected:
-		/// <summary>
-		/// Limpiar los recursos que se estén usando.
-		/// </summary>
 		~VistaPanel()
 		{
 			if (components)
@@ -36,22 +36,14 @@ namespace Ticket {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::Button^ button3;
-	protected:
 
 	private:
-		/// <summary>
-		/// Variable del diseñador necesaria.
-		/// </summary>
+		System::Windows::Forms::Button^ button1;
+		System::Windows::Forms::Button^ button2;
+		System::Windows::Forms::Button^ button3;
 		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Método necesario para admitir el Diseñador. No se puede modificar
-		/// el contenido de este método con el editor de código.
-		/// </summary>
 		void InitializeComponent(void)
 		{
 			this->button1 = (gcnew System::Windows::Forms::Button());
@@ -67,6 +59,7 @@ namespace Ticket {
 			this->button1->TabIndex = 0;
 			this->button1->Text = L"Cargar";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &VistaPanel::button1_Click);
 			// 
 			// button2
 			// 
@@ -76,6 +69,7 @@ namespace Ticket {
 			this->button2->TabIndex = 1;
 			this->button2->Text = L"Tickets";
 			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &VistaPanel::button2_Click);
 			// 
 			// button3
 			// 
@@ -101,35 +95,41 @@ namespace Ticket {
 
 		}
 #pragma endregion
-		private:
+
+	public:
 		void AjustarVisibilidadBotones(String^ rol) {
-			if (rol == "Administrador") {
-				// Mostrar todos los botones
+			if (rol == "1") {
 				this->button1->Visible = true;
 				this->button2->Visible = true;
 				this->button3->Visible = true;
-				
-				
 			}
-			else if (rol == "Trabajador") {
-				// Ocultar botones específicos
+			else if (rol == "2") {
 				this->button1->Visible = true;
 				this->button2->Visible = true;
 				this->button3->Visible = false;
 			}
-			else if (rol == "Técnico") {
-				// Ocultar botones específicos
+			else if (rol == "3") {
 				this->button1->Visible = true;
 				this->button2->Visible = false;
 				this->button3->Visible = true;
 			}
 		}
-		private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
-			{
-				Ticket::Usuario^ vistaUsuario = gcnew Ticket::Usuario();
-				vistaUsuario->Show();
-			}
-		}
-};
+
+	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+		Ticket::Usuario^ vistaUsuario = gcnew Ticket::Usuario();
+		vistaUsuario->Show();
+	}
+	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+		
+			//Ticket::Ticket1^ vistaListado = gcnew Ticket::Ticket1(rol);
+		Ticket::Listado^ vistaListado = gcnew  Ticket::Listado();
+			vistaListado->Show();
+		
+	}
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		Ticket::Carga^ vistaCarga = gcnew Ticket::Carga();
+		vistaCarga->Show();
 
 	}
+};
+}

@@ -1,11 +1,15 @@
 #pragma once
+#include "pch.h"
 #include "ModifLogin.h"
 #include "VistaPanel.h"
 #include "Login.h"
+#include "Ticket1.h"
+#include "Usuario.h"
+#include "DataAccess.h"
 
 
 
-namespace Ticket {
+ namespace Ticket {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -148,7 +152,9 @@ namespace Ticket {
 
 		{
 			dni = Int32::Parse(usuarioStr);
-		}catch (FormatException^) {
+
+		}
+		catch (FormatException^) {
 			MessageBox::Show("El formato de la identificación no es válido. Asegúrate de que sea un número entero.");
 			return;
 		}
@@ -172,29 +178,20 @@ namespace Ticket {
 
 
 		try {
-			/*
-					if (dni == 0) {
-						MessageBox::Show("El campo de identificación no puede estar vacío.");
-						return;
-					}
-
-					if (password == 0) {
-						MessageBox::Show("El campo de contraseña no puede estar vacío.");
-						return;
-					}
-
-			*/
+			/*MessageBox::Show("ingreso al try");*/
 
 
 			DataAccess::UserDao^ userDao = gcnew DataAccess::UserDao();
 			Console::WriteLine("Llamando a Login con dni: " + dni + " y password: " + password);
+
 			bool resultado = userDao->Login(dni, password, rol);
+
 
 			if (resultado) {
 				MessageBox::Show("existe en la base de datos");
 
 				DataAccess::UserDao::currentUser = dni;
-
+			
 				/*userDao->currentUser = dni;*/
 
 				if (dni == password)
@@ -205,15 +202,16 @@ namespace Ticket {
 					modifLogin->Show();
 
 				}
-				else
-				{
+			
+				else {
 
-					Ticket::VistaPanel^ vistaPanel = gcnew Ticket::VistaPanel(rol);
+					MessageBox::Show("vista panel");
+				
+					Ticket::VistaPanel^ vistaPanel = gcnew Ticket::VistaPanel(rol); 
 					vistaPanel->Show();
+					 
 				}
-
-
-				}
+				
 			}
 			else
 			{
@@ -226,7 +224,7 @@ namespace Ticket {
 			}*/
 		}
 		catch (Exception^ ex) {
-			MessageBox::Show("Ocurrió un error: " + ex->Message);
+			MessageBox::Show("Ocurrió un error " );
 		}
 
 	};

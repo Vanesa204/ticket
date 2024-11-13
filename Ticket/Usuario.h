@@ -1,6 +1,6 @@
 #pragma once
 #include "DataAccess.h"
-#include "Usuario.h"
+
 
 
 namespace Ticket {
@@ -17,18 +17,21 @@ namespace Ticket {
 	/// </summary>
 	public ref class Usuario : public System::Windows::Forms::Form
 	{
+
+	private: DataTable^ dataTable;
 	public:
 		Usuario(void)
 		{
 			InitializeComponent();
+			
 			//
 			//TODO: agregar código de constructor aquí
 			//
 
 			this->texDni->TextChanged += gcnew EventHandler(this, &Usuario::texDni_TextChanged);//para que se autocimplete la contraseña
-			this->checkedRol->Items->AddRange(gcnew array<System::Object^> {
+			/*this->checkedRol->Items->AddRange(gcnew array<System::Object^> {
 				"Administrador", "Empleado", "Técnico"
-			});
+			});*/
 		}
 
 	protected:
@@ -42,6 +45,7 @@ namespace Ticket {
 				delete components;
 			}
 		}
+	private:DataAccess::UserDao^ userDao;
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label3;
@@ -54,14 +58,23 @@ namespace Ticket {
 	private: System::Windows::Forms::TextBox^ texApellido;
 	private: System::Windows::Forms::TextBox^ texContrasenia;
 	private: System::Windows::Forms::Button^ butAgregarUsuario;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column1;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ rolId;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column2;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column3;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column4;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column5;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column6;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column7;
+	private: System::Windows::Forms::RadioButton^ radioButHabSi;
+	private: System::Windows::Forms::RadioButton^ radioButAdm;
+	private: System::Windows::Forms::RadioButton^ radioButTrab;
+	private: System::Windows::Forms::RadioButton^ radioButTec;
+	private: System::Windows::Forms::GroupBox^ groupBox1;
+	private: System::Windows::Forms::GroupBox^ groupBox2;
+
+
+
+
+
+
+
+
+
+
+
 
 	private: System::Windows::Forms::Button^ butModificarUsuario;
 
@@ -72,6 +85,8 @@ namespace Ticket {
 
 		this->texContrasenia->Text = this->texDni->Text;
 	}
+		  /* void CargarDatosUsuarios(); // Declaración del método CargarDatosUsuarios*/
+		  
 
 	private: System::Windows::Forms::TextBox^ textBox6;
 	private: System::Windows::Forms::Button^ button1;
@@ -87,12 +102,12 @@ namespace Ticket {
 	private: System::Windows::Forms::Button^ button4;
 	private: System::Windows::Forms::Button^ butEliminarUsuario;
 
-	private: System::Windows::Forms::CheckedListBox^ checkedRol;
+
 
 	private: System::Windows::Forms::Label^ label7;
 	private: System::Windows::Forms::TextBox^ texFallas;
 
-	private: System::Windows::Forms::RadioButton^ radioButSi;
+	/*private: System::Windows::Forms::RadioButton^ radioButSi;*/
 	private: System::Windows::Forms::RadioButton^ radioButNo;
 	private: System::Windows::Forms::DataGridView^ tablaUsuarios;
 
@@ -119,7 +134,9 @@ namespace Ticket {
 		/// Método necesario para admitir el Diseñador. No se puede modificar
 		/// el contenido de este método con el editor de código.
 		/// </summary>
+
 		void InitializeComponent(void)
+
 		{
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
@@ -135,21 +152,19 @@ namespace Ticket {
 			this->butModificarUsuario = (gcnew System::Windows::Forms::Button());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->butEliminarUsuario = (gcnew System::Windows::Forms::Button());
-			this->checkedRol = (gcnew System::Windows::Forms::CheckedListBox());
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->texFallas = (gcnew System::Windows::Forms::TextBox());
-			this->radioButSi = (gcnew System::Windows::Forms::RadioButton());
 			this->radioButNo = (gcnew System::Windows::Forms::RadioButton());
 			this->tablaUsuarios = (gcnew System::Windows::Forms::DataGridView());
-			this->Column1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->rolId = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column2 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column4 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column5 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column6 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column7 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->radioButHabSi = (gcnew System::Windows::Forms::RadioButton());
+			this->radioButAdm = (gcnew System::Windows::Forms::RadioButton());
+			this->radioButTrab = (gcnew System::Windows::Forms::RadioButton());
+			this->radioButTec = (gcnew System::Windows::Forms::RadioButton());
+			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->tablaUsuarios))->BeginInit();
+			this->groupBox1->SuspendLayout();
+			this->groupBox2->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -164,7 +179,7 @@ namespace Ticket {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(25, 54);
+			this->label2->Location = System::Drawing::Point(25, 86);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(44, 13);
 			this->label2->TabIndex = 1;
@@ -173,7 +188,7 @@ namespace Ticket {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(25, 91);
+			this->label3->Location = System::Drawing::Point(25, 113);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(44, 13);
 			this->label3->TabIndex = 2;
@@ -182,7 +197,7 @@ namespace Ticket {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(543, 47);
+			this->label4->Location = System::Drawing::Point(34, 202);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(23, 13);
 			this->label4->TabIndex = 3;
@@ -191,7 +206,7 @@ namespace Ticket {
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(25, 147);
+			this->label5->Location = System::Drawing::Point(25, 157);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(54, 13);
 			this->label5->TabIndex = 4;
@@ -200,7 +215,7 @@ namespace Ticket {
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(25, 193);
+			this->label6->Location = System::Drawing::Point(25, 58);
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(61, 13);
 			this->label6->TabIndex = 5;
@@ -215,28 +230,28 @@ namespace Ticket {
 			// 
 			// texNombre
 			// 
-			this->texNombre->Location = System::Drawing::Point(151, 54);
+			this->texNombre->Location = System::Drawing::Point(151, 79);
 			this->texNombre->Name = L"texNombre";
 			this->texNombre->Size = System::Drawing::Size(100, 20);
 			this->texNombre->TabIndex = 7;
 			// 
 			// texApellido
 			// 
-			this->texApellido->Location = System::Drawing::Point(151, 91);
+			this->texApellido->Location = System::Drawing::Point(151, 110);
 			this->texApellido->Name = L"texApellido";
 			this->texApellido->Size = System::Drawing::Size(100, 20);
 			this->texApellido->TabIndex = 8;
 			// 
 			// texContrasenia
 			// 
-			this->texContrasenia->Location = System::Drawing::Point(151, 193);
+			this->texContrasenia->Location = System::Drawing::Point(151, 51);
 			this->texContrasenia->Name = L"texContrasenia";
 			this->texContrasenia->Size = System::Drawing::Size(100, 20);
 			this->texContrasenia->TabIndex = 11;
 			// 
 			// butAgregarUsuario
 			// 
-			this->butAgregarUsuario->Location = System::Drawing::Point(339, 34);
+			this->butAgregarUsuario->Location = System::Drawing::Point(696, 22);
 			this->butAgregarUsuario->Name = L"butAgregarUsuario";
 			this->butAgregarUsuario->Size = System::Drawing::Size(75, 23);
 			this->butAgregarUsuario->TabIndex = 12;
@@ -246,7 +261,7 @@ namespace Ticket {
 			// 
 			// butModificarUsuario
 			// 
-			this->butModificarUsuario->Location = System::Drawing::Point(339, 63);
+			this->butModificarUsuario->Location = System::Drawing::Point(696, 86);
 			this->butModificarUsuario->Name = L"butModificarUsuario";
 			this->butModificarUsuario->Size = System::Drawing::Size(75, 23);
 			this->butModificarUsuario->TabIndex = 13;
@@ -255,7 +270,7 @@ namespace Ticket {
 			// 
 			// button4
 			// 
-			this->button4->Location = System::Drawing::Point(270, 193);
+			this->button4->Location = System::Drawing::Point(257, 51);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(101, 23);
 			this->button4->TabIndex = 15;
@@ -264,25 +279,17 @@ namespace Ticket {
 			// 
 			// butEliminarUsuario
 			// 
-			this->butEliminarUsuario->Location = System::Drawing::Point(339, 92);
+			this->butEliminarUsuario->Location = System::Drawing::Point(696, 157);
 			this->butEliminarUsuario->Name = L"butEliminarUsuario";
 			this->butEliminarUsuario->Size = System::Drawing::Size(75, 23);
 			this->butEliminarUsuario->TabIndex = 16;
 			this->butEliminarUsuario->Text = L"Eliminar";
 			this->butEliminarUsuario->UseVisualStyleBackColor = true;
 			// 
-			// checkedRol
-			// 
-			this->checkedRol->FormattingEnabled = true;
-			this->checkedRol->Location = System::Drawing::Point(652, 47);
-			this->checkedRol->Name = L"checkedRol";
-			this->checkedRol->Size = System::Drawing::Size(100, 64);
-			this->checkedRol->TabIndex = 17;
-			// 
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(285, 125);
+			this->label7->Location = System::Drawing::Point(511, 204);
 			this->label7->Name = L"label7";
 			this->label7->Size = System::Drawing::Size(34, 13);
 			this->label7->TabIndex = 18;
@@ -290,26 +297,16 @@ namespace Ticket {
 			// 
 			// texFallas
 			// 
-			this->texFallas->Location = System::Drawing::Point(339, 125);
+			this->texFallas->Location = System::Drawing::Point(579, 199);
 			this->texFallas->Name = L"texFallas";
+			this->texFallas->ReadOnly = true;
 			this->texFallas->Size = System::Drawing::Size(32, 20);
 			this->texFallas->TabIndex = 19;
-			// 
-			// radioButSi
-			// 
-			this->radioButSi->AutoSize = true;
-			this->radioButSi->Location = System::Drawing::Point(151, 143);
-			this->radioButSi->Name = L"radioButSi";
-			this->radioButSi->Size = System::Drawing::Size(34, 17);
-			this->radioButSi->TabIndex = 20;
-			this->radioButSi->TabStop = true;
-			this->radioButSi->Text = L"Si";
-			this->radioButSi->UseVisualStyleBackColor = true;
 			// 
 			// radioButNo
 			// 
 			this->radioButNo->AutoSize = true;
-			this->radioButNo->Location = System::Drawing::Point(212, 145);
+			this->radioButNo->Location = System::Drawing::Point(131, 17);
 			this->radioButNo->Name = L"radioButNo";
 			this->radioButNo->Size = System::Drawing::Size(39, 17);
 			this->radioButNo->TabIndex = 21;
@@ -320,66 +317,87 @@ namespace Ticket {
 			// tablaUsuarios
 			// 
 			this->tablaUsuarios->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->tablaUsuarios->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(8) {
-				this->Column1,
-					this->rolId, this->Column2, this->Column3, this->Column4, this->Column5, this->Column6, this->Column7
-			});
 			this->tablaUsuarios->Location = System::Drawing::Point(28, 250);
 			this->tablaUsuarios->Name = L"tablaUsuarios";
-			this->tablaUsuarios->Size = System::Drawing::Size(743, 150);
+			this->tablaUsuarios->Size = System::Drawing::Size(743, 246);
 			this->tablaUsuarios->TabIndex = 22;
 			// 
-			// Column1
+			// radioButHabSi
 			// 
-			this->Column1->HeaderText = L"Usuario";
-			this->Column1->Name = L"Column1";
+			this->radioButHabSi->AutoSize = true;
+			this->radioButHabSi->Location = System::Drawing::Point(21, 17);
+			this->radioButHabSi->Name = L"radioButHabSi";
+			this->radioButHabSi->Size = System::Drawing::Size(34, 17);
+			this->radioButHabSi->TabIndex = 23;
+			this->radioButHabSi->TabStop = true;
+			this->radioButHabSi->Text = L"Si";
+			this->radioButHabSi->UseVisualStyleBackColor = true;
 			// 
-			// rolId
+			// radioButAdm
 			// 
-			this->rolId->HeaderText = L"rolId";
-			this->rolId->Name = L"rolId";
+			this->radioButAdm->AutoSize = true;
+			this->radioButAdm->Location = System::Drawing::Point(6, 19);
+			this->radioButAdm->Name = L"radioButAdm";
+			this->radioButAdm->Size = System::Drawing::Size(88, 17);
+			this->radioButAdm->TabIndex = 24;
+			this->radioButAdm->TabStop = true;
+			this->radioButAdm->Text = L"Administrador";
+			this->radioButAdm->UseVisualStyleBackColor = true;
 			// 
-			// Column2
+			// radioButTrab
 			// 
-			this->Column2->HeaderText = L"Nombre";
-			this->Column2->Name = L"Column2";
+			this->radioButTrab->AutoSize = true;
+			this->radioButTrab->Location = System::Drawing::Point(100, 19);
+			this->radioButTrab->Name = L"radioButTrab";
+			this->radioButTrab->Size = System::Drawing::Size(76, 17);
+			this->radioButTrab->TabIndex = 25;
+			this->radioButTrab->TabStop = true;
+			this->radioButTrab->Text = L"Trabajador";
+			this->radioButTrab->UseVisualStyleBackColor = true;
 			// 
-			// Column3
+			// radioButTec
 			// 
-			this->Column3->HeaderText = L"Apellido";
-			this->Column3->Name = L"Column3";
+			this->radioButTec->AutoSize = true;
+			this->radioButTec->Location = System::Drawing::Point(202, 19);
+			this->radioButTec->Name = L"radioButTec";
+			this->radioButTec->Size = System::Drawing::Size(64, 17);
+			this->radioButTec->TabIndex = 26;
+			this->radioButTec->TabStop = true;
+			this->radioButTec->Text = L"Técnico";
+			this->radioButTec->UseVisualStyleBackColor = true;
 			// 
-			// Column4
+			// groupBox1
 			// 
-			this->Column4->HeaderText = L"Rol";
-			this->Column4->Name = L"Column4";
+			this->groupBox1->Controls->Add(this->radioButNo);
+			this->groupBox1->Controls->Add(this->radioButHabSi);
+			this->groupBox1->Location = System::Drawing::Point(114, 140);
+			this->groupBox1->Name = L"groupBox1";
+			this->groupBox1->Size = System::Drawing::Size(200, 40);
+			this->groupBox1->TabIndex = 27;
+			this->groupBox1->TabStop = false;
 			// 
-			// Column5
+			// groupBox2
 			// 
-			this->Column5->HeaderText = L"Habilitado";
-			this->Column5->Name = L"Column5";
-			// 
-			// Column6
-			// 
-			this->Column6->HeaderText = L"Contraseña";
-			this->Column6->Name = L"Column6";
-			// 
-			// Column7
-			// 
-			this->Column7->HeaderText = L"Fallas";
-			this->Column7->Name = L"Column7";
+			this->groupBox2->Controls->Add(this->radioButAdm);
+			this->groupBox2->Controls->Add(this->radioButTrab);
+			this->groupBox2->Controls->Add(this->radioButTec);
+			this->groupBox2->Location = System::Drawing::Point(87, 194);
+			this->groupBox2->Name = L"groupBox2";
+			this->groupBox2->Size = System::Drawing::Size(303, 50);
+			this->groupBox2->TabIndex = 28;
+			this->groupBox2->TabStop = false;
 			// 
 			// Usuario
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(874, 430);
+			this->AutoSize = true;
+			this->ClientSize = System::Drawing::Size(874, 508);
+			this->Controls->Add(this->groupBox2);
+			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->tablaUsuarios);
-			this->Controls->Add(this->radioButNo);
-			this->Controls->Add(this->radioButSi);
 			this->Controls->Add(this->texFallas);
 			this->Controls->Add(this->label7);
-			this->Controls->Add(this->checkedRol);
 			this->Controls->Add(this->butEliminarUsuario);
 			this->Controls->Add(this->button4);
 			this->Controls->Add(this->butModificarUsuario);
@@ -394,9 +412,15 @@ namespace Ticket {
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
+			this->Location = System::Drawing::Point(151, 143);
 			this->Name = L"Usuario";
 			this->Text = L"Usuario";
+			this->Load += gcnew System::EventHandler(this, &Usuario::Usuario_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->tablaUsuarios))->EndInit();
+			this->groupBox1->ResumeLayout(false);
+			this->groupBox1->PerformLayout();
+			this->groupBox2->ResumeLayout(false);
+			this->groupBox2->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -406,57 +430,67 @@ namespace Ticket {
 		
 		DataAccess::UserDao^ userDao = gcnew DataAccess::UserDao();
 		int dni = Int32::Parse(this->texDni->Text);
-		String^ nombre = this->texNombre->Text;
-		String^ apellido = this->texApellido->Text;
-		
-		int fallas = 0; // this->texFallas->Text;
-		
-		this->texFallas->Text = fallas.ToString();
-		
-		// para obtener el rol que se selecciona del CheckedListBox
-
-		/*String^ rol = this->checkedRol->CheckedItems->Count > 0 ? this->checkedRol->CheckedItems[0]->ToString() : "";*/
-		int idRol = this->checkedRol->CheckedItems->Count > 0 ? this->checkedRol->SelectedIndex:-1;
-
-		//obtener el estado habilitado
-
-		bool habilitado = this->radioButSi->Checked;
-		/*bool habilitado = this->radioButSi->Checked ? "Sí" : "No";
-		if (this->radioButSi->Checked) {
-
-			MessageBox::Show("Seleccionaste Sí");
-		}
-		else if (this->radioButNo->Checked) {
-
-			MessageBox::Show("Seleccionaste No");
-		}
-		else {
-
-			MessageBox::Show("No seleccionaste ninguna opción, por favor selecciona una opcíon");
-		}*/
-
-		//confi del checkedListBox//
-
-		
 
 		int password = Int32::Parse(this->texDni->Text);// this->texContrasenia->Text;
 		this->texContrasenia->Text = password.ToString();
+
+		String^ nombre = this->texNombre->Text;
+		String^ apellido = this->texApellido->Text;
+
+		bool habilitado = this->radioButHabSi->Checked;
+		
+		int rolId=0; 
+		
+		if (radioButAdm->Checked) 
+		{
+			rolId = 1; // Administrador
+		}
+		else if (radioButTrab->Checked) 
+		{ 
+			rolId = 2; // Trabajador 
+		}
+		else if (radioButTec->Checked)
+		{
+			rolId = 3; // Técnico }
+
+		}
+		int fallas = 0; // this->texFallas->Text;
+
+		this->texFallas->Text = fallas.ToString();
+
+		/*UserDao^ userDao = gcnew UserDao();*/
+
+		bool resultado = userDao->IngresarUsuario(dni, nombre, apellido, habilitado, fallas, password, rolId);
+
+		if (resultado)
+		{
+			MessageBox::Show("Usuario guardado exitosamente."); 
+			LoadData();
+		}
+		else 
+		{
+			MessageBox::Show("Error al guardar el usuario."); }
 		
 
-		// Llamar al método IngresarUsuario
-	
-		 bool resultado = userDao->IngresarUsuario(dni, nombre, apellido,  habilitado, fallas, password, idRol);
-		
-		// Verificar la selección del RadioButton
-	
-		if (resultado) { 
-			MessageBox::Show("Usuario agregado correctamente");
-		}
-		else { 
-			MessageBox::Show("Error al agregar el usuario"); 
-		}
+	};
 
-	};
-	};
+
+
+
+	private: System::Void Usuario_Load(System::Object^ sender, System::EventArgs^ e) {
+		          LoadData();
+	}
+
+		 void LoadData()
+		   {
+			   DataAccess::UserDao^ userDao = gcnew DataAccess::UserDao();
+			   DataTable^ dataTable = userDao->GetAllUsuarios(); // Llama al método para obtener el DataTable
+			   tablaUsuarios->DataSource = dataTable; // Asigna el DataTable al DataGridView
+
+		   }
+
+
+	
+};
 
 }
